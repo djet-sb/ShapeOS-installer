@@ -1,5 +1,8 @@
 # ShapeOS-installer
-
+### Clone
+```
+git clone git@github.com:d00t-b-res/ShapeOS-installer.git
+```
 
 ### Build
 ```
