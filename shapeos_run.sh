@@ -3,7 +3,7 @@
 
 COUNT=`echo ${SSH_CONNECTION} | wc -c`
 
-if [ $COUNT -eq 0 ]
+if [ $COUNT -eq 1 ]
 then
 	echo "[-] Get update for ShapeOS"
         docker pull bres/shape-os
