@@ -6,7 +6,7 @@ then
 	return 
 fi
 COUNT=`echo ${SSH_CONNECTION} | wc -c`
-DOCKER_RUN="docker run -it -e USER=${USER} -v /opt/shapeos:/custom  -v /opt/user_data:/opt/user_data -v /var/run/docker.sock:/docker_on_host.sock --privileged --ipc host --net host"
+DOCKER_RUN="docker run --name ShapeOS --rm -d -e USER=${USER} -v /opt/shapeos/docker:/var/lib/docker -v /opt/shapeos:/custom  -v /opt/user_data:/opt/user_data -v /var/run/docker.sock:/docker_on_host.sock --privileged --ipc host --net host"
 if [ $COUNT -eq 1 ]
 then
 	echo "[-] Get update for ShapeOS"
@@ -18,13 +18,16 @@ then
 	fi
 	if [ "x`docker images bres/shape-os:local -q`" == "x" ]
 	then
+             echo "[-] Stop ShapeOS"
+             docker stop ShapeOS &> /dev/null
              echo "[-] Run ShapeOS latest"
              exec $DOCKER_RUN bres/shape-os:latest
 	else 
+             echo "[-] Stop ShapeOS"
+             docker stop ShapeOS &> /dev/null
              echo "[-] Run ShapeOS local"
              exec $DOCKER_RUN bres/shape-os:local
 	fi
 else
 	echo Welcome
 fi
-
